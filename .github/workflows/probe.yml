@@ -1,0 +1,16 @@
+name: "Probe"
+on:
+  issue_comment:
+    types: [created]
+permissions: {}
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump event payload shape
+        env:
+          TOP_PR: ${{ toJSON(github.event.pull_request) }}
+          ISSUE_PR: ${{ toJSON(github.event.issue.pull_request) }}
+        run: |
+          echo "TOP_LEVEL_PULL_REQUEST=$TOP_PR"
+          echo "ISSUE_PULL_REQUEST=$ISSUE_PR"
